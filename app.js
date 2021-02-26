@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { v4: uuidv4 } = require('uuid');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
@@ -31,6 +32,13 @@ app.get('/log', (req, res) => {
   connection.query(`SELECT * FROM logs WHERE user_id='${req.query.uid}' AND date='${req.query.date}'`, function (error, results, fields) {
     if (error) throw error;
     res.json(results);
+  });
+});
+
+app.post('/log', (req, res) => {
+  connection.query(`INSERT INTO logs(id, date, user_id) VALUES('${uuidv4()}', '${req.body.date}', '${req.body.uid}')`, function (error, results, fields) {
+    if (error) throw error;
+    res.send('Success');
   });
 });
 
