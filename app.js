@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 app.use(cors());
 
 app.get('/', (req, res) => {
-  connection.query('SELECT * FROM exercises LIMIT 1', function (error, results, fields) {
+  connection.query('SELECT * FROM exercises', function (error, results, fields) {
     if (error) throw error;
     res.json(results);
   });
