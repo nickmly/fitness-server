@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 const cors = require('cors');
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -10,10 +11,11 @@ const connection = mysql.createConnection({
   database: process.env.DB_DB
 });
 
-
+// parse application/json
+app.use(bodyParser.json())
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/exercises', (req, res) => {
   connection.query('SELECT * FROM exercises', function (error, results, fields) {
     if (error) throw error;
     res.json(results);
