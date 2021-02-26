@@ -11,12 +11,24 @@ const connection = mysql.createConnection({
   database: process.env.DB_DB
 });
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
 // parse application/json
 app.use(bodyParser.json())
+
+// use cors
 app.use(cors());
 
 app.get('/exercises', (req, res) => {
   connection.query('SELECT * FROM exercises', function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+app.get('/log', (req, res) => {
+  connection.query(`SELECT * FROM logs WHERE user_id='${req.query.uid}' AND date='${req.query.date}'`, function (error, results, fields) {
     if (error) throw error;
     res.json(results);
   });
