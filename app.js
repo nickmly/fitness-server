@@ -45,7 +45,6 @@ app.post('/log', (req, res) => {
 
 
 app.get('/workout', (req, res) => {
-  const id = uuidv4();
   connection.query(`SELECT * FROM workouts WHERE log_id='${req.query.log_id}'`, function (error, results, fields) {
     if (error) throw error;
     res.send(results);
