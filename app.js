@@ -36,9 +36,43 @@ app.get('/log', (req, res) => {
 });
 
 app.post('/log', (req, res) => {
-  connection.query(`INSERT INTO logs(id, date, user_id) VALUES('${uuidv4()}', '${req.body.date}', '${req.body.uid}')`, function (error, results, fields) {
+  const id = uuidv4();
+  connection.query(`INSERT INTO logs(id, date, user_id) VALUES('${id}', '${req.body.date}', '${req.body.uid}')`, function (error, results, fields) {
     if (error) throw error;
-    res.send('Success');
+    res.send(id);
+  });
+});
+
+
+app.get('/workout', (req, res) => {
+  const id = uuidv4();
+  connection.query(`SELECT * FROM workouts WHERE log_id='${req.query.log_id}'`, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+app.post('/workout', (req, res) => {
+  const id = uuidv4();
+  connection.query(`INSERT INTO workouts(id, log_id, exercise_id) VALUES('${id}', '${req.body.log_id}', '${req.body.exercise_id}')`, function (error, results, fields) {
+    if (error) throw error;
+    res.send(id);
+  });
+});
+
+
+app.get('/sets', (req, res) => {
+  connection.query(`SELECT * FROM sets WHERE workout_id='${req.query.workout_id}'`, function (error, results, fields) {
+    if (error) throw error;
+    res.send(results);
+  });
+});
+
+app.post('/set', (req, res) => {
+  const id = uuidv4();
+  connection.query(`INSERT INTO sets(id, workout_id, reps, weight) VALUES('${id}', '${req.body.workout_id}', '${req.body.reps}', '${req.body.weight}')`, function (error, results, fields) {
+    if (error) throw error;
+    res.send(id);
   });
 });
 
