@@ -69,6 +69,16 @@ app.post('/set', (req, res) => {
   });
 });
 
+app.delete('/set', (req, res) => {
+  db.query(`DELETE FROM sets WHERE id='${req.query.id}'`, function (error, results, fields) {
+    if (error) {
+      res.status(500).send(error);
+      throw error;
+    } 
+    res.status(200).send("Success");
+  });
+});
+
 app.listen(8000, () => {
   console.log("server listening on port 8000");
 });
