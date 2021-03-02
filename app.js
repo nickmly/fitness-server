@@ -22,6 +22,13 @@ app.get('/exercises', (req, res) => {
   });
 });
 
+app.post('/exercises', (req, res) => {
+  db.query(`INSERT INTO exercises(title,muscles,equipment) VALUES('${req.body.title}', '${req.body.muscles}', '${req.body.equipment}')`, function (error, results, fields) {
+    if (error) throw error;
+    res.status(200).json('Success');
+  });
+});
+
 app.get('/log', (req, res) => {
   db.query(`SELECT * FROM logs WHERE user_id='${req.query.uid}' AND date='${req.query.date}'`, function (error, results, fields) {
     if (error) throw error;
@@ -81,7 +88,7 @@ app.delete('/set', (req, res) => {
     if (error) {
       res.status(500).send(error);
       throw error;
-    } 
+    }
     res.status(200).send("Success");
   });
 });
@@ -91,7 +98,7 @@ app.delete('/sets', (req, res) => {
     if (error) {
       res.status(500).send(error);
       throw error;
-    } 
+    }
     res.status(200).send("Success");
   });
 });
