@@ -28,6 +28,8 @@ app.use('/workout', workoutRoutes);
 app.use('/sets', setsRoutes);
 app.use('/set', setRoutes);
 
-app.listen(8000, () => {
-  console.log("server listening on port 8000");
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log("server listening on port " + PORT);
 });
