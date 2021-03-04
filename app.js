@@ -12,14 +12,20 @@ const workoutRoutes = require('./routes/workout');
 const setsRoutes = require('./routes/sets');
 const setRoutes = require('./routes/set');
 
+const {checkIfAuthenticated} = require('./auth.middleware.js');
+
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // use cors
+// TODO: configure options based on environment
+// https://expressjs.com/en/resources/middleware/cors.html
 app.use(cors());
+
+app.use(checkIfAuthenticated);
 
 // use routes
 app.use('/exercises', exerciseRoutes);
