@@ -21,9 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // use cors
-// TODO: configure options based on environment
-// https://expressjs.com/en/resources/middleware/cors.html
-app.use(cors());
+var corsOptions = {
+  origin: process.env.ORIGIN_ALLOWED,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 app.use(checkIfAuthenticated);
 
